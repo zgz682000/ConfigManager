@@ -201,7 +201,7 @@ DataManager.onDatabaseReady(function () {
 						next(err);
 					}
 				}
-			)
+			);
 		});
 	});
 

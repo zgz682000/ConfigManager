@@ -19,6 +19,7 @@ DataManager.onDatabaseReady(function () {
 		DataManager.getUserByName(username, function (err, userObj) {
 			if (err) {
 				next(err);
+				return;
 			}
 			if (userObj && userObj.password === password){
 				res.cookie("session", username);

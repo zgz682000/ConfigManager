@@ -38,7 +38,7 @@ DataManager.onDatabaseReady(function () {
 						if (!isLocked){
 							DataManager.lockFile(fullFilePath, function (err) {
 								callback(err, isLocked)
-							})
+							});
 						}else {
 							callback(null, isLocked);
 						}
