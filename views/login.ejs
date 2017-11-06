@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1 align="center"><%= title %></h1>
+<div align="center">
+    <br/>
+    UserName:<input type="text" id="username"/><br/><br/>
+    Password:<input type="password" id="password"/><br/><br/>
+    <button type="button" onclick="onLoginButtonClicked()">Login</button>
+</div>
+
+</body>
+<script>
+    function onLoginButtonClicked(){
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        window.location.href = "/users/authorize?username=" + username + "&password=" + password;
+    }
+</script>
+</html>

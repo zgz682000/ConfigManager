@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    <link href="/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
+    <script src="/jsoneditor/jsoneditor.js"></script>
+    <script src="/jquery/jquery.js"></script>
+    <style type="text/css">
+        body {
+            font: 10.5pt arial;
+            color: #4d4d4d;
+            line-height: 150%;
+            padding-left: 40px;
+        }
+
+        code {
+            background-color: #f5f5f5;
+        }
+
+        #jsoneditor {
+            height: 800px;
+        }
+    </style>
+</head>
+<body>
+<h1 align="center"><%= title %></h1>
+<div align="center">
+    <%if (!lock){%>
+    <button type="button" onclick="onSaveButtonClicked()">Save</button>
+    <%}%>
+    <button type="button" onclick="onCloseButtonClicked()">Close</button>
+</div>
+<form>
+    <div id="jsoneditor"></div>
+</form>
+
+
+<script>
+    var container, options, json, editor;
+
+    container = document.getElementById('jsoneditor');
+
+    var json = <%-json%>;
+
+    options = {
+        <%if (lock){%>
+        mode: 'view',
+        modes: ['view', 'text'],
+        <%}else{%>
+        mode: 'tree',
+        modes: ['tree', 'view', 'text'], // allowed modes
+        <%}%>
+        onError: function (err) {
+            alert(err.toString());
+        },
+        indentation: 4,
+        escapeUnicode: false
+        <%if (schema != null){%>
+        ,schema: <%-schema%>
+        <%}%>
+    };
+
+
+    editor = new JSONEditor(container, options, json);
+
+    function onCloseButtonClicked(){
+        var pathComponents = window.location.pathname.split("/");
+        pathComponents.splice(0,2);
+        pathComponents.splice(pathComponents.length - 1,1);
+        var newPath = pathComponents.join("/");
+        <%if (!lock){%>
+        onClose();
+        <%}%>
+        window.location.href = window.location.origin + "/projects/" + newPath
+    }
+    <%if (!lock){%>
+    function onSaveButtonClicked(close){
+        var url = window.location.origin + "/save" + window.location.pathname.substr("/editor".length);
+        var data = editor.getText();
+        $.ajax({
+            url: url,
+            type: "post",
+            contentType: "application/json",
+            data: data,
+            success: function(data, textStatus, jqXHR){
+                if(data == "ok"){
+                    alert("save success");
+                    if(close){
+                        onCloseButtonClicked();
+                    }
+                }
+            }
+        });
+    }
+
+    function onClose(){
+        var url = window.location.origin + "/close" + window.location.pathname.substr("/editor".length);
+        $.ajax({
+            url: url,
+            type: "post"
+        });
+    }
+
+    window.onbeforeunload = onClose;
+
+    function onHeartBeating(){
+        console.log("onHeartBeating");
+        var url = window.location.origin + "/heartbeating" + window.location.pathname.substr("/editor".length);
+        $.ajax({
+            url: url,
+            type: "post"
+        });
+    }
+    
+    window.setInterval(onHeartBeating,10000);
+    <%}%>
+</script>
+</body>
+</html>

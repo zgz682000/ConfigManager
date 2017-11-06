@@ -1,0 +1,10 @@
+{
+  "mongo" : {
+    "host" : "localhost",
+    "port" : "27017",
+    "db" : "ConfigManager",
+    "projects_collection" : "Projects",
+    "users_collection" : "Users",
+    "file_locks_collection" : "FileLocks"
+  }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1 align="center"><%= title %></h1>
+<div align="center">
+    <%if (projectPath != "/"){%>
+    <input type="text" id="fileNameText"/>
+    <button type="button" onclick="onNewButtonClicked()">New</button>
+    <!-- <button type="button" onclick="onDeleteButtonClicked()">Delete</button> -->
+        <%if(isProjectRoot){%>
+    <span style="font-size: 36px;">&nbsp&nbsp&nbsp</span>
+    <button type="button" onclick="onCommitButtonClicked()">Commit</button>
+    <button type="button" onclick="onRevertButtonClicked()">Revert</button>
+        <%}%>
+    <%}%>
+</div>
+<div id = "filediv"></div>
+</body>
+<script src="/javascripts/bundled_files.js"> </script>
+<script src="/jquery/jquery.js"></script>
+<script>
+    var fileData = <%-fileDatasString%>;
+    var br = browser();
+    br.addListener("entry", function(entry){
+        console.log("entry", entry);
+        if(entry.type === "directory"){
+            window.location.href = "/projects/" + entry.path;
+        }else if(entry.type === "file"){
+            window.location.href = "/editor/" + entry.path;
+        }
+    })
+    br.appendTo(document.getElementById("filediv"));
+    br.directory("<%=projectPath%>", fileData);
+
+
+    function onNewButtonClicked(){
+        var newNameText = document.getElementById("fileNameText").value;
+        if (newNameText == null || newNameText == ""){
+            return;
+        }
+//        console.log(window.location);
+        window.location.search = "?new=" + newNameText;
+    }
+
+    function onDeleteButtonClicked(){
+        var deleteNameText = document.getElementById("fileNameText").value;
+        if (deleteNameText == null || deleteNameText == ""){
+            return;
+        }
+        window.location.search = "?delete=" + deleteNameText;
+    }
+
+    function onCommitButtonClicked(){
+        var url = window.location.href + "?commit=true";
+        $.ajax({
+            url: url,
+            type: "post",
+            success: function(data, textStatus, jqXHR){
+                if(data == "ok"){
+                    alert("commit success");
+                }
+            }
+        });
+    }
+
+    function onRevertButtonClicked () {
+        var url = window.location.href + "?revert=true";
+        $.ajax({
+            url: url,
+            type: "post",
+             success: function(data, textStatus, jqXHR){
+                if(data.result == "ok"){
+                    if (data.stderr == undefined || data.stderr == null || data.stderr == ""){
+                        alert("revert success: " + data.stdout);
+                    }else{
+                        alert("revert error: " + data.stderr);
+                    }
+                    
+                }
+            }
+        });
+    }
+</script>
+
+</html>
