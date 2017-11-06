@@ -5,6 +5,16 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
+    <div id="over" class="over"></div>
+    <div id="layout" class="layout">
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div>
 <h1 align="center"><%= title %></h1>
 <div align="center">
     <%if (projectPath != "/"){%>
@@ -54,12 +64,23 @@
         window.location.search = "?delete=" + deleteNameText;
     }
 
+    function showLoading(){
+        document.getElementById("over").style.display = "block";
+        document.getElementById("layout").style.display = "block";
+    }
+    function hideLoading() {
+        document.getElementById("over").style.display = "none";
+        document.getElementById("layout").style.display = "none";
+    }
+
     function onCommitButtonClicked(){
+        showLoading();
         var url = window.location.href + "?commit=true";
         $.ajax({
             url: url,
             type: "post",
             success: function(data, textStatus, jqXHR){
+                hideLoading()
                 if (data.result == "ok") {
                     if (data.stderr == undefined || data.stderr == null || data.stderr == "") {
                         alert("revert success: " + data.stdout);
@@ -73,18 +94,19 @@
     }
 
     function onRevertButtonClicked () {
+        showLoading();
         var url = window.location.href + "?revert=true";
         $.ajax({
             url: url,
             type: "post",
-             success: function(data, textStatus, jqXHR){
+            success: function(data, textStatus, jqXHR){
+                hideLoading()
                 if(data.result == "ok"){
                     if (data.stderr == undefined || data.stderr == null || data.stderr == ""){
                         alert("revert success: " + data.stdout);
                     }else{
                         alert("revert error: " + data.stderr);
                     }
-                    
                 }
             }
         });
