@@ -77,7 +77,7 @@ DataManager.onDatabaseReady(function () {
 						return;
 					}
 					res.send({
-						reuslt: "ok",
+						result: "ok",
 						stdout: stdout,
 						stderr: stderr
 					});
@@ -92,7 +92,7 @@ DataManager.onDatabaseReady(function () {
 						return;
 					}
 					res.send({
-						reuslt : "ok",
+						result : "ok",
 						stdout : stdout,
 						stderr: stderr
 					});
