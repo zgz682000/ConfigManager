@@ -60,8 +60,13 @@
             url: url,
             type: "post",
             success: function(data, textStatus, jqXHR){
-                if(data == "ok"){
-                    alert("commit success");
+                if (data.result == "ok") {
+                    if (data.stderr == undefined || data.stderr == null || data.stderr == "") {
+                        alert("revert success: " + data.stdout);
+                    } else {
+                        alert("revert error: " + data.stderr);
+                    }
+
                 }
             }
         });
