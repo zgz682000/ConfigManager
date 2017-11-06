@@ -2,10 +2,10 @@
 var MongoClient = require('mongodb').MongoClient;
 var mongoConfg = require("../config/Database.json").mongo;
 var EventEmitter = require("events").EventEmitter;
-var mongoUrl = "mongodb://" + mongoConfg.host + ":" + mongoConfg.port + "/" + mongoConfg.db;
+var mongoUrl = "mongodb://" + mongoConfg.username + ":" + mongoConfg.password + "@" + mongoConfg.host + ":" + mongoConfg.port + "/" + mongoConfg.db;
 var eventEmitter = new EventEmitter();
 var kOnDateBaseReadyEvent = "database_ready";
-var kOnDateBaseErrorEvent = "database_error"
+var kOnDateBaseErrorEvent = "database_error";
 
 
 exports.onDatabaseReady = function (callback) {
