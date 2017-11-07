@@ -72,10 +72,8 @@ DataManager.onDatabaseReady(function () {
 			if(req.query.hasOwnProperty("commit") && projectConfig.hasOwnProperty("commit_trigger_command")){
 				var commitTriggerCommand = projectConfig.commit_trigger_command;
 				process.exec(commitTriggerCommand, function (err, stdout, stderr) {
-					if (err){
-						next(err);
-						return;
-					}
+					console.log("stdout : " + stdout);
+					console.log("stderr : " + stderr);
 					res.send({
 						result: "ok",
 						stdout: stdout,
@@ -87,10 +85,8 @@ DataManager.onDatabaseReady(function () {
 			else if(req.query.hasOwnProperty("revert") && projectConfig.hasOwnProperty("revert_trigger_command")){
 				var revertTriggerCommand = projectConfig.revert_trigger_command;
 				process.exec(revertTriggerCommand, function (err, stdout, stderr) {
-					if (err){
-						next(err);
-						return;
-					}
+					console.log("stdout : " + stdout);
+					console.log("stderr : " + stderr);
 					res.send({
 						result : "ok",
 						stdout : stdout,
@@ -150,10 +146,8 @@ DataManager.onDatabaseReady(function () {
 						else if (projectConfig.hasOwnProperty("open_trigger_command")) {
 							var openTriggerCommand = projectConfig.open_trigger_command;
 							process.exec(openTriggerCommand, function (err, stdout, stderr) {
-								if (err){
-									callback(err);
-									return;
-								}
+								console.log("stdout : " + stdout);
+								console.log("stderr : " + stderr);
 								callback(null, stdout, stderr);
 							});
 						}
