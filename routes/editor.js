@@ -6,7 +6,6 @@ var router = express.Router();
 var fs = require("fs");
 var async = require("async");
 var DataManager = require("../service/DataManager");
-
 DataManager.onDatabaseReady(function () {
 	/* GET home page. */
 	router.get('/:projectName/*', function(req, res, next) {
@@ -57,8 +56,15 @@ DataManager.onDatabaseReady(function () {
 								callback(err);
 								return;
 							}
-							var jsonString = data.toString();
-							res.render("editor", {title : projectName + "/" + filePath, json : jsonString, schema:schemaString, lock : isLocked});
+							if (filePath.endsWith(".json")){
+								var jsonString = data.toString();
+								res.render("editor", { title: projectName + "/" + filePath, json: jsonString, schema: schemaString, lock: isLocked });
+							} else if (filePath.endsWith(".plist")){
+								var plist = require('plist');
+								var plistObj = plist.parse(data.toString());
+								var jsonString = JSON.stringify(plistObj);
+								res.render("editor", { title: projectName + "/" + filePath, json: jsonString, schema: schemaString, lock: isLocked });
+							}
 						});
 					}
 				],

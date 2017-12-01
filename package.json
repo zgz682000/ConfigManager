@@ -16,6 +16,7 @@
     "jsoneditor": "",
     "file-browser-widget": "",
     "mongodb": "^2.2.31",
-    "async": "^2.5.0"
+    "async": "^2.5.0",
+    "plist": "^2.1.0"
   }
 }

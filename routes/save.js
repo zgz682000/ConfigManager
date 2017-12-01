@@ -21,7 +21,13 @@ DataManager.onDatabaseReady(function () {
 			}
 			var projectPath = projectConfig.path;
 			var fullFilePath = projectPath + "/" + filePath;
-			var fileContent = JSON.stringify(req.body, null, '\t');
+			var fileContent = null;
+			if (filePath.endsWith(".json")){
+				fileContent = JSON.stringify(req.body, null, '\t');
+			}else if (filePath.endsWith(".plist")){
+				var plist = require("plist");
+				fileContent = plist.build(req.body);
+			}
 			fs.writeFile(fullFilePath, fileContent, null, function(err){
 				if (err){
 					next(err);

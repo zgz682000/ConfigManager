@@ -115,29 +115,15 @@ DataManager.onDatabaseReady(function () {
 			async.waterfall(
 				[
 					function (callback) {
-						if (req.query.hasOwnProperty("delete")) {
-							var deleteName = req.query.delete;
-							var deletePath = projectPath + "/" + deleteName;
-							if (deleteName.endsWith(".json")) {
-								if (fs.existsSync(deletePath)) {
-									fs.unlinkSync(deletePath);
-								}
-							} else {
-								if (fs.existsSync(deletePath)) {
-									deleteFolderRecursive(deletePath);
-								}
-							}
-							callback(null);
-						}
-						else if (req.query.hasOwnProperty("new")) {
+						if (req.query.hasOwnProperty("new")) {
 							var newName = req.query.new;
 							var newPath = projectPath + "/" + newName;
-							if (newName.endsWith(".json")) {
-								if (!fs.existsSync(deletePath)) {
+							if (newName.endsWith(".json") || newName.endsWith(".plist")) {
+								if (!fs.existsSync(newPath)) {
 									fs.writeFileSync(newPath, "{}");
 								}
 							} else {
-								if (!fs.existsSync(deletePath)) {
+								if (!fs.existsSync(newPath)) {
 									fs.mkdirSync(newPath);
 								}
 							}
@@ -167,9 +153,10 @@ DataManager.onDatabaseReady(function () {
 									}
 								);
 							} else {
-								if (path.extname(file) !== ".json") {
+								if (path.extname(file) !== ".json" && path.extname(file) !== ".plist") {
 									continue;
 								}
+								
 								projectFileDatas.push(
 									{
 										path: projectName + "/" + file,
@@ -215,29 +202,25 @@ DataManager.onDatabaseReady(function () {
 				next(new Error("path not exist " + projectName + "/" + directoryPath));
 				return;
 			}
-			if (req.query.hasOwnProperty("delete")) {
-				var deleteName = req.query.delete;
-				var deletePath = fullDirectoryPath + "/" + deleteName;
-				if (deleteName.endsWith(".json")) {
-					if (fs.existsSync(deletePath)) {
-						fs.unlinkSync(deletePath);
-					}
-				} else {
-					if (fs.existsSync(deletePath)) {
-						deleteFolderRecursive(deletePath);
-					}
-				}
-
-			}
+			
 			if (req.query.hasOwnProperty("new")) {
 				var newName = req.query.new;
 				var newPath = fullDirectoryPath + "/" + newName;
 				if (newName.endsWith(".json")) {
-					if (!fs.existsSync(deletePath)) {
+					if (!fs.existsSync(newPath)) {
 						fs.writeFileSync(newPath, "{}");
 					}
+				}else if (newName.endsWith(".plist")) {
+					if (!fs.existsSync(newPath)) {
+						fs.writeFileSync(newPath, '<?xml version="1.0" encoding="UTF - 8"?>\
+							< !DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd" >\
+							<plist version="1.0">\
+								<dict>\
+								</dict>\
+							</plist>');
+					}
 				} else {
-					if (!fs.existsSync(deletePath)) {
+					if (!fs.existsSync(newPath)) {
 						fs.mkdirSync(newPath);
 					}
 				}
@@ -255,7 +238,7 @@ DataManager.onDatabaseReady(function () {
 						}
 					);
 				} else {
-					if (path.extname(file) != ".json") {
+					if (path.extname(file) !== ".json" && path.extname(file) !== ".plist") {
 						continue;
 					}
 					projectFileDatas.push(
