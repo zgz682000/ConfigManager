@@ -18,16 +18,30 @@
 <h1 align="center"><%= title %></h1>
 <div align="center">
     <%if (projectPath != "/"){%>
-    <input type="text" id="fileNameText"/>
-    <button type="button" onclick="onNewButtonClicked()">New</button>
-    <input type="file" id="uploader"/>
-    <!-- <button type="button" onclick="onDeleteButtonClicked()">Delete</button> -->
+    <table>
+        <tr>
+            <th>Create File</th>
+            <th>Upload File</th>
         <%if(isProjectRoot){%>
-    <span style="font-size: 36px;">&nbsp&nbsp&nbsp</span>
-    <br/>
-    <button type="button" onclick="onCommitButtonClicked()">Commit</button>
-    <button type="button" onclick="onRevertButtonClicked()">Revert</button>
+            <th>Svn Controls</th>
         <%}%>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" id="fileNameText" />
+                <button type="button" onclick="onNewButtonClicked()">New</button>
+            </td>
+            <td>
+                <input type="file" id="uploader" />
+            </td>
+        <%if(isProjectRoot){%>
+            <td>
+                <button type="button" onclick="onCommitButtonClicked()">Commit</button>
+                <button type="button" onclick="onRevertButtonClicked()">Revert</button>
+            </td>
+        <%}%>
+        </tr>
+    </table>
     <%}%>
 </div>
 <div id = "filediv"></div>
