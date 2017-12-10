@@ -9,7 +9,8 @@ var async = require("async");
 var fs = require("fs");
 var path = require('path');
 var DataManager = require("../service/DataManager");
-
+var multer = require('multer')
+var upload = multer()
 var deleteFolderRecursive = function(path) {
 
 	var files = [];
@@ -60,7 +61,7 @@ DataManager.onDatabaseReady(function () {
 		});
 	});
 
-	router.post('/:projectName', function(req, res, next) {
+	router.post('/:projectName', upload.fields([]), function(req, res, next) {
 		var projectName = req.params.projectName;
 
 		DataManager.getProjectByName(projectName, function (err, projectConfig) {
@@ -95,8 +96,9 @@ DataManager.onDatabaseReady(function () {
 				});
 			} 
 			else if (req.query.hasOwnProperty("upload")) {
-				console.log(">>>>body.name" + req.body.name);
-				console.log(">>>>body.file" + req.body.file);
+				console.log(">>>>body = " + req.body);
+				console.log(">>>>body.name = " + req.body.name);
+				console.log(">>>>body.file = " + req.body.file);
 				res.send({
 					result: "ok",
 					stdout: "",

@@ -113,7 +113,7 @@
             },
             error: function (error) {
                 hideLoading();
-                alert("commit error: " + error);
+                alert("commit error: " + error.status);
             }
         });
     }
@@ -136,7 +136,7 @@
             },
             error:function(error){
                 hideLoading();
-                alert("revert error: " + error);
+                alert("revert error: " + error.status);
             }
         });
     }
@@ -152,14 +152,14 @@
             return;
         }
         var url = window.location.href + "?upload=true";
-        var data = new FormData();
-        data.append("name", uploader.value);
-        data.append("file", uploader.files[0]);
+        var formData = new FormData();
+        formData.append("name", uploader.value);
+        formData.append("file", uploader.files[0]);
         showLoading();
         $.ajax({
             url: url,
             type: "POST",
-            data: data,
+            data: formData,
             processData: false,
             contentType: false,
             success: function (data) {
@@ -172,7 +172,7 @@
             },
             error: function (error) {
                 hideLoading();
-                alert("upload error: " + error);
+                alert("upload error: " + error.status);
             }
         });
     }
