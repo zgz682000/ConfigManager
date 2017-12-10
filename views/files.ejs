@@ -110,6 +110,10 @@
                     }
 
                 }
+            },
+            error: function (error) {
+                hideLoading();
+                alert("commit error: " + error);
             }
         });
     }
@@ -129,11 +133,48 @@
                         alert("revert error: " + data.stderr);
                     }
                 }
+            },
+            error:function(error){
+                hideLoading();
+                alert("revert error: " + error);
             }
         });
     }
     function onUploadButtonClicked(){
-
+        var uploader = document.getElementById("uploader")
+        if (!uploader){
+            return;
+        }
+        if (!uploader.files){
+            return;
+        }
+        if (uploader.files.length == 0){
+            return;
+        }
+        var url = window.location.href + "?upload=true";
+        var data = new FormData();
+        data.append("name", uploader.value);
+        data.append("file", uploader.files[0]);
+        showLoading();
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                hideLoading()
+                if (data.stderr == undefined || data.stderr == null || data.stderr == "") {
+                    alert("upload success: " + data.stdout);
+                } else {
+                    alert("upload error: " + data.stderr);
+                }
+            },
+            error: function (error) {
+                hideLoading();
+                alert("upload error: " + error);
+            }
+        });
     }
 </script>
 

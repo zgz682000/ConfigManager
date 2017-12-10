@@ -93,6 +93,15 @@ DataManager.onDatabaseReady(function () {
 						stderr: stderr
 					});
 				});
+			} 
+			else if (req.query.hasOwnProperty("upload")) {
+				console.log(">>>>body.name" + req.body.name);
+				console.log(">>>>body.file" + req.body.file);
+				res.send({
+					result: "ok",
+					stdout: "",
+					stderr: ""
+				});
 			}
 
 		});
