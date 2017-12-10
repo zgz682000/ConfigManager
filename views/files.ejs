@@ -30,15 +30,15 @@
         </thead>
         <tbody>
         <tr>
-            <td>
+            <td align="center">
                 <input type="text" id="fileNameText" />
                 <button type="button" onclick="onNewButtonClicked()">New</button>
             </td>
-            <td>
+            <td align="center">
                 <input type="file" id="uploader" />
             </td>
         <%if(isProjectRoot){%>
-            <td>
+            <td align="center">
                 <button type="button" onclick="onCommitButtonClicked()">Commit</button>
                 <button type="button" onclick="onRevertButtonClicked()">Revert</button>
             </td>
