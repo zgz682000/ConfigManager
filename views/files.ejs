@@ -36,9 +36,9 @@
             </td>
             <td align="center">
                 <form id="uploader_form">
-                    <input name="upload_file" type="file"/>
-                    <button type="button" onclick="onUploadButtonClicked()">Upload</button>
+                    <input name="upload_file" type="file" id="uploader" style="background-color:white;border:1px solid lightgray" />
                 </form>
+                <button type="button" onclick="onUploadButtonClicked()">Upload</button>
             </td>
         <%if(isProjectRoot){%>
             <td align="center">
@@ -143,7 +143,16 @@
         });
     }
     function onUploadButtonClicked(){
-        
+        var uploader = document.getElementById("uploader")
+        if (!uploader){
+            return;
+        }
+        if (!uploader.files){
+            return;
+        }
+        if (uploader.files.length == 0){
+            return;
+        }
         var uploadForm = document.getElementById("uploader_form");
         var url = window.location.href + "?upload=true";
         var formData = new FormData(uploadForm);
