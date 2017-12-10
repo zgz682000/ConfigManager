@@ -97,8 +97,8 @@ DataManager.onDatabaseReady(function () {
 			} 
 			else if (req.query.hasOwnProperty("upload")) {
 				console.log(">>>>body = " + req.body);
-				console.log(">>>>body.name = " + req.body.name);
-				console.log(">>>>body.file = " + req.body.file);
+				console.log(">>>>body.upload_file_name = " + req.body.name);
+				console.log(">>>>body.upload_file_data = " + req.body.file);
 				res.send({
 					result: "ok",
 					stdout: "",

@@ -153,8 +153,8 @@
         }
         var url = window.location.href + "?upload=true";
         var formData = new FormData();
-        formData.append("name", uploader.value);
-        formData.append("file", uploader.files[0]);
+        formData.append("upload_file_name", uploader.value);
+        formData.append("upload_file_data", uploader.files[0]);
         showLoading();
         $.ajax({
             url: url,
