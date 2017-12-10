@@ -85,7 +85,7 @@ a {
 
 /* Table Head */
 #table-5 thead th {
-background-color: rgb(156, 186, 95);
+background-color: #00B7FF;
 color: #fff;
 border-bottom-width: 0;
 }
@@ -98,7 +98,7 @@ color: #000;
 #table-5 tr, #table-5 th {
 border-width: 1px;
 border-style: solid;
-border-color: rgb(156, 186, 95);
+border-color: #00B7FF;
 }
 
 /* Padding and font style */
