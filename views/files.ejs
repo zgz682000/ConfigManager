@@ -35,8 +35,10 @@
                 <button type="button" onclick="onNewButtonClicked()">Create</button>
             </td>
             <td align="center">
-                <input type="file" id="uploader" style="background-color:white;border:1px solid lightgray" />
-                <button type="button" onclick="onUploadButtonClicked()">Upload</button>
+                <form id="uploader_form">
+                    <input type="file" id="uploader" style="background-color:white;border:1px solid lightgray" />
+                    <button type="button" onclick="onUploadButtonClicked()">Upload</button>
+                </form>
             </td>
         <%if(isProjectRoot){%>
             <td align="center">
@@ -151,10 +153,9 @@
         if (uploader.files.length == 0){
             return;
         }
+        var uploadForm = document.getElementById("uploader_form");
         var url = window.location.href + "?upload=true";
-        var formData = new FormData();
-        formData.append("upload_file_name", uploader.value);
-        formData.append("upload_file_data", uploader.files[0]);
+        var formData = new FormData(uploadForm);
         showLoading();
         $.ajax({
             url: url,
