@@ -83,6 +83,10 @@ a {
     text-align:center;
 }
 
+
+#table-5{
+    width: 80%;
+}
 /* Table Head */
 #table-5 thead th {
 background-color: #00B7FF;
@@ -110,6 +114,3 @@ font-family: Verdana;
 font-weight: bold;
 }
 
-#control-div{
-    width: 80%;
-}
