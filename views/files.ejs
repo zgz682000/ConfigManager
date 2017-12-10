@@ -19,13 +19,14 @@
 <div align="center">
     <%if (projectPath != "/"){%>
     <table id="table-3" border="1">
-        <tr>
+        <thead>
             <th>Create File</th>
             <th>Upload File</th>
         <%if(isProjectRoot){%>
             <th>Svn Controls</th>
         <%}%>
-        </tr>
+        </thead>
+        <tbody>
         <tr>
             <td>
                 <input type="text" id="fileNameText" />
@@ -41,6 +42,7 @@
             </td>
         <%}%>
         </tr>
+        </tbody>
     </table>
     <%}%>
 </div>
