@@ -100,12 +100,12 @@ border-bottom-color: rgb(235, 242, 224);
 padding: 5px 10px;
 font-size: 12px;
 font-family: Verdana;
-color: rgb(5, 5, 5);
+color: rgb(149, 170, 109);
 }
 
 /* Alternating background colors */
 #table-3 tr:nth-child(even) {
-background: #00B7FF
+background: rgb(230, 238, 214)
 }
 #table-3 tr:nth-child(odd) {
 background: #FFF
