@@ -32,10 +32,11 @@
         <tr>
             <td align="center">
                 <input type="text" id="fileNameText" />
-                <button type="button" onclick="onNewButtonClicked()">New</button>
+                <button type="button" onclick="onNewButtonClicked()">Create</button>
             </td>
             <td align="center">
                 <input type="file" id="uploader" />
+                <button type="button" onclick="onUploadButtonClicked()">Upload</button>
             </td>
         <%if(isProjectRoot){%>
             <td align="center">
@@ -130,6 +131,9 @@
                 }
             }
         });
+    }
+    function onUploadButtonClicked(){
+        
     }
 </script>
 
