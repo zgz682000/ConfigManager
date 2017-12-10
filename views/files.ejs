@@ -36,7 +36,7 @@
             </td>
             <td align="center">
                 <form id="uploader_form">
-                    <input name="upload_file" type="file" id="uploader"/>
+                    <input name="upload_file" type="file"/>
                     <button type="button" onclick="onUploadButtonClicked()">Upload</button>
                 </form>
             </td>
@@ -143,16 +143,7 @@
         });
     }
     function onUploadButtonClicked(){
-        var uploader = document.getElementById("uploader")
-        if (!uploader){
-            return;
-        }
-        if (!uploader.files){
-            return;
-        }
-        if (uploader.files.length == 0){
-            return;
-        }
+        
         var uploadForm = document.getElementById("uploader_form");
         var url = window.location.href + "?upload=true";
         var formData = new FormData(uploadForm);
