@@ -109,3 +109,7 @@ font-size: 12px;
 font-family: Verdana;
 font-weight: bold;
 }
+
+#control-div{
+    width: 80%;
+}
