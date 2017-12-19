@@ -167,6 +167,7 @@
                 hideLoading()
                 if (data.stderr == undefined || data.stderr == null || data.stderr == "") {
                     alert("upload success: " + data.stdout);
+                    window.location.href = window.location.href;
                 } else {
                     alert("upload error: " + data.stderr);
                 }
