@@ -51,21 +51,29 @@ DataManager.onDatabaseReady(function () {
 								schemaString = fs.readFileSync(schemaPath);
 							}
 						}
-						fs.readFile(fullFilePath,null,function(err, data){
-							if (err){
-								callback(err);
-								return;
-							}
-							if (filePath.endsWith(".json")){
+						if (filePath.endsWith(".json")) {
+							fs.readFile(fullFilePath,null,function(err, data){
+								if (err){
+									callback(err);
+									return;
+								}
 								var jsonString = data.toString();
 								res.render("editor", { title: projectName + "/" + filePath, json: jsonString, schema: schemaString, lock: isLocked });
-							} else if (filePath.endsWith(".plist")){
+							});
+						} else if (filePath.endsWith(".plist")) {
+							fs.readFile(fullFilePath, null, function (err, data) {
+								if (err) {
+									callback(err);
+									return;
+								}
 								var plist = require('plist');
 								var plistObj = plist.parse(data.toString());
 								var jsonString = JSON.stringify(plistObj);
 								res.render("editor", { title: projectName + "/" + filePath, json: jsonString, schema: schemaString, lock: isLocked });
-							}
-						});
+							});
+						}else{
+							res.sendFile(fullFilePath);
+						}
 					}
 				],
 				function (err) {

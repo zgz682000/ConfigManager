@@ -194,7 +194,18 @@ DataManager.onDatabaseReady(function () {
 									}
 								);
 							} else {
-								if (path.extname(file) !== ".json" && path.extname(file) !== ".plist") {
+								var includeExtentions = projectConfig.include_extentions;
+								if (!includeExtentions){
+									includeExtentions = [".json", ".plist"];
+								}
+								var extIncluded = false;
+								for (var ext in includeExtentions){
+									if (path.extname(file) === ext){
+										extIncluded = true;
+										break;
+									}
+								}
+								if (!extIncluded){
 									continue;
 								}
 								
