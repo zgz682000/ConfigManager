@@ -61,7 +61,7 @@ DataManager.onDatabaseReady(function () {
 		});
 	});
 
-	router.post('/:projectName', upload.fields([]), function(req, res, next) {
+	router.post('/:projectName', upload.single("upload_file"), function(req, res, next) {
 		var projectName = req.params.projectName;
 
 		DataManager.getProjectByName(projectName, function (err, projectConfig) {
@@ -98,7 +98,7 @@ DataManager.onDatabaseReady(function () {
 			else if (req.query.hasOwnProperty("upload")) {
 
 				console.log(">>>>req.body = " + JSON.stringify(req.body));
-				console.log(">>>>req.files = " + JSON.stringify(req.files));
+				console.log(">>>>req.files = " + JSON.stringify(req.file));
 				res.send({
 					result: "ok",
 					stdout: "",
