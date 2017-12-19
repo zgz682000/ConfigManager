@@ -1,5 +1,3 @@
-import { print } from 'util';
-
 /**
  * Created by zhangguozhi on 16/7/7.
  */
