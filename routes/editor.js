@@ -1,3 +1,5 @@
+import { print } from 'util';
+
 /**
  * Created by zhangguozhi on 16/7/7.
  */
@@ -11,8 +13,8 @@ DataManager.onDatabaseReady(function () {
 	router.get('/:projectName/*', function(req, res, next) {
 		var projectName = req.params.projectName;
 		var filePath = req.path.substr(projectName.length + 2);
-
-
+		filePath = decodeURI(filePath);
+		print("decoded filepath = " + filePath);
 
 		DataManager.getProjectByName(projectName, function (err, projectConfig) {
 			if (err){
@@ -72,9 +74,7 @@ DataManager.onDatabaseReady(function () {
 								res.render("editor", { title: projectName + "/" + filePath, json: jsonString, schema: schemaString, lock: isLocked });
 							});
 						}else{
-							var decodedPath = decodeURI(fullFilePath)
-							console.log("decodedPath = " + decodedPath);
-							res.sendFile(decodedPath);
+							res.sendFile(fullFilePath);
 						}
 					}
 				],
