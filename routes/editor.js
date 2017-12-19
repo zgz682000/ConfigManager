@@ -14,7 +14,7 @@ DataManager.onDatabaseReady(function () {
 		var projectName = req.params.projectName;
 		var filePath = req.path.substr(projectName.length + 2);
 		filePath = decodeURI(filePath);
-		print("decoded filepath = " + filePath);
+		console.log("decoded filepath = " + filePath);
 
 		DataManager.getProjectByName(projectName, function (err, projectConfig) {
 			if (err){
