@@ -195,6 +195,7 @@ DataManager.onDatabaseReady(function () {
 								);
 							} else {
 								var includeExtentions = projectConfig.include_extentions;
+								console.log("includeExtentions = " + JSON.stringify(includeExtentions));
 								if (!includeExtentions){
 									includeExtentions = [".json", ".plist"];
 								}
@@ -202,8 +203,10 @@ DataManager.onDatabaseReady(function () {
 								console.log("includeExtentions = " + JSON.stringify(includeExtentions));
 								console.log("path.extname(file) = " + path.extname(file));
 								for (var ext in includeExtentions){
+									console.log("ext = " + ext);
+									console.log("typeof ext = " + typeof ext);
+									console.log("typeof path.extname(file) = " + typeof path.extname(file));
 									if (path.extname(file) == ext){
-										console.log("equal ext = " + ext);
 										extIncluded = true;
 										break;
 									}
