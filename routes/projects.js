@@ -199,13 +199,17 @@ DataManager.onDatabaseReady(function () {
 									includeExtentions = [".json", ".plist"];
 								}
 								var extIncluded = false;
+								console.log("includeExtentions = " + JSON.stringify(includeExtentions));
+								console.log("path.extname(file) = " + path.extname(file));
 								for (var ext in includeExtentions){
 									if (path.extname(file) == ext){
+										console.log("equal ext = " + ext);
 										extIncluded = true;
 										break;
 									}
 								}
 								if (!extIncluded){
+									console.log("extIncluded is false");
 									continue;
 								}
 								
