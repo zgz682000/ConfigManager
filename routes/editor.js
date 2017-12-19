@@ -72,7 +72,9 @@ DataManager.onDatabaseReady(function () {
 								res.render("editor", { title: projectName + "/" + filePath, json: jsonString, schema: schemaString, lock: isLocked });
 							});
 						}else{
-							res.sendFile(fullFilePath);
+							var decodedPath = decodeURI(fullFilePath)
+							console.log("decodedPath = " + decodedPath);
+							res.sendFile(decodedPath);
 						}
 					}
 				],
