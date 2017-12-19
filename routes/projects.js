@@ -96,7 +96,6 @@ DataManager.onDatabaseReady(function () {
 				});
 			} 
 			else if (req.query.hasOwnProperty("upload")) {
-				console.log(">>>>req.files = " + JSON.stringify(req.file));
 				if (req.file && req.file.originalname && req.file.buffer){
 					
 					var directoryPath = req.path.substr(projectName.length + 2);
