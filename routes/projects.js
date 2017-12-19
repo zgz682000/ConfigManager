@@ -194,19 +194,14 @@ DataManager.onDatabaseReady(function () {
 									}
 								);
 							} else {
-								var includeExtentions = projectConfig.include_extentions;
+								var includeExtentions = projectConfig.include_extensions;
 								console.log("includeExtentions = " + JSON.stringify(includeExtentions));
 								if (!includeExtentions){
 									includeExtentions = [".json", ".plist"];
 								}
 								var extIncluded = false;
-								console.log("includeExtentions = " + JSON.stringify(includeExtentions));
-								console.log("path.extname(file) = " + path.extname(file));
-								for (var ext in includeExtentions){
-									console.log("ext = " + ext);
-									console.log("typeof ext = " + typeof ext);
-									console.log("typeof path.extname(file) = " + typeof path.extname(file));
-									if (path.extname(file) == ext){
+								for (var i in includeExtentions){
+									if (path.extname(file) === includeExtentions[i]){
 										extIncluded = true;
 										break;
 									}
@@ -297,7 +292,20 @@ DataManager.onDatabaseReady(function () {
 						}
 					);
 				} else {
-					if (path.extname(file) !== ".json" && path.extname(file) !== ".plist") {
+					var includeExtentions = projectConfig.include_extensions;
+					console.log("includeExtentions = " + JSON.stringify(includeExtentions));
+					if (!includeExtentions) {
+						includeExtentions = [".json", ".plist"];
+					}
+					var extIncluded = false;
+					for (var i in includeExtentions) {
+						if (path.extname(file) === includeExtentions[i]) {
+							extIncluded = true;
+							break;
+						}
+					}
+					if (!extIncluded) {
+						console.log("extIncluded is false");
 						continue;
 					}
 					projectFileDatas.push(
