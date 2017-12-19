@@ -200,7 +200,7 @@ DataManager.onDatabaseReady(function () {
 								}
 								var extIncluded = false;
 								for (var ext in includeExtentions){
-									if (path.extname(file) === ext){
+									if (path.extname(file) == ext){
 										extIncluded = true;
 										break;
 									}
