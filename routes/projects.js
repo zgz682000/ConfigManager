@@ -61,6 +61,58 @@ DataManager.onDatabaseReady(function () {
 		});
 	});
 
+	router.post('/:projectName/*', upload.single("upload_file"), function (req, res, next) {
+		var projectName = req.params.projectName;
+		DataManager.getProjectByName(projectName, function (err, projectConfig) {
+			if (err) {
+				next(err);
+				return;
+			}
+		
+			if (req.query.hasOwnProperty("upload")) {
+				if (req.file && req.file.originalname && req.file.buffer) {
+
+					var directoryPath = req.path.substr(projectName.length + 2);
+					var fullDirectoryPath = projectConfig.path + "/" + directoryPath;
+					if (!fs.existsSync(fullDirectoryPath)) {
+						next(new Error("path not exist " + projectName + "/" + directoryPath));
+						return;
+					}
+					var uploadFilePath = fullDirectoryPath + "/" + req.file.originalname
+
+					if (fs.existsSync(uploadFilePath)) {
+						fs.unlinkSync(uploadFilePath);
+					}
+					fs.writeFile(uploadFilePath, req.file.buffer, function (err) {
+						if (err) {
+							res.send({
+								result: "error",
+								stdout: "",
+								stderr: err
+							});
+							return;
+						} else {
+							res.send({
+								result: "ok",
+								stdout: "",
+								stderr: ""
+							});
+						}
+					});
+				} else {
+					res.send({
+						result: "error",
+						stdout: "",
+						stderr: "file upload error"
+					});
+				}
+
+			}
+
+		});
+
+	});
+
 	router.post('/:projectName', upload.single("upload_file"), function(req, res, next) {
 		var projectName = req.params.projectName;
 		
